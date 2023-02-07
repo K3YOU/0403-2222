@@ -14,51 +14,45 @@
         <br><br>
 
         <table>
-            <% for(i=0;i<bookDB.length;i++) { var book = bookDB[i]  %>
-                <% if(i % 4 == 0) { %>
-                    <tr>
-                    <% } %>                
-
-                    <% if(book["bookCategory"]== "DB/OS"){ %>
-
-                        <td>
-                            <p>
-                                <% if(book["bookStock"] > 0){ %>
-                                    <a href="bookinfo?bookNo=<%= book['bookNo'] %>">
-                                        <img alt ="book " src="<%= book['bookImage'] %>" width="200px"  height="300px" >
-                                    </a>
-                    <% } else { %>
-                        <img alt ="book " src="<%= book['bookImage'] %>" width= "200px" height="300px" style="opacity:20%">
-                        <% } %>
-                            </p>
-                            
-                            <p>
-                                <a> <%= book['bookName'] %> sdghfdshds</a>
-                            </p>
-                            
-                            <p>
-                                <a> <%=book['bookPrice']%> </a>
-                                ->
-                                <a><!--%=book[]%--></a>
-
-                            </p>
-                            <p></p>
-
-                        </td>
-                    <%}%>
-
-
-
-                <% if(i % 4 == 3) { %>
-                    </tr>
-                    <%} %>                
+            <% 
+                for(var i=0; i<bookDB.length; i++) { 
+                    var book = bookDB[i];
     
-
-
-
-            <% } %>
-
-        </table>
+                    if(i % 4 == 0) {
+            %>
+                    <tr align="center" height="250px">
+            <%      } %> 
+                        <td width="400px">
+                            <a href="bookInfo?bookNo=<%= book['bookNo']  %>">
+                                <% if(book["bookStock"] > 0 && book["bookCategory"]== "DB/OS") { %>
+                                    <img alt="상품" src="<%= book['bookImage'] %>" width="200px" height="300px" border="1px">
+                                <% } else { %>
+                                    <img alt="상품" src="<%= book['bookImage'] %>" width="200px" height="300px" border="1px" style="opacity:20%">
+                                <% } %> 
+                            </a>
+                            <p><font size="3"><b><%= book["bookName"] %></b></font></p>
+                            <% if(book["bookStock"] > 0) { %>
+                                <% 
+                                    if(book["bookDiscount"] > 0) { 
+                                        var discountPrice = book["bookPrice"] * (100 - book["bookDiscount"]) / 100;
+                                %>
+                                    <p>
+                                        <font size="3" style="text-decoration: line-through;"><%= book["bookPrice"] %>원</font>
+                                        →
+                                        <font size="3" color="#196ab3"><b><%= discountPrice %>원</b></font>
+                                    </p>
+                                <% } %>
+                            <% } else { %>
+                                    <font size="2" color="red"><b>품절</b></font>
+                            <% } %>
+                            <p><font size="2"><%= book["bookInfo"] %></font></p>
+                            <br><br>
+                        </td>
+            <%      if(i % 4 == 3) { %> 
+                    </tr>
+            <%      } %>
+            <% } %>        
+            </table>
 
     </div>
 </body>

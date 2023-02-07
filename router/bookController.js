@@ -37,6 +37,29 @@ function sortBookByBookNo(bookDB){
     }
 }
 
+//OS만 담는 함수 
+function sortBookByOS(bookDB){
+    var BookByOSList = []
+    for(i=0;i<bookDB.length;i++){
+
+        if(bookDB[i]["bookCategory"]== "DB/OS"){
+            BookByOSList.push(bookDB[i])
+        }
+    }
+    return BookByOSList
+}
+
+
+function sortBookByOS2(bookDB , BookByOSList){
+   // var BookByOSList = []
+    for(i=0;i<bookDB.length;i++){
+
+        if(bookDB[i]["bookCategory"]== "DB/OS"){
+            BookByOSList.push(bookDB[i])
+        }
+    }
+ //   return BookByOSList
+}
 
 
 module.exports = function(app){
@@ -83,14 +106,15 @@ module.exports = function(app){
         var log = req.session.log
         var bookDB = req.session.bookDB
         var name = req.session.name
-
         //os인 책만 정렬하는 함수
-        sortBookByBookSold(bookDB)
-
+        //   var bookOSDB = sortBookByOS(bookDB)
+        
+        var bookOSDB = [];
+        sortBookByOS2(bookDB, bookOSDB);
         //렌더링에 필요한 변수들 지정
         var renderData={
             'log' : log,
-            'bookDB' : bookDB,
+            'bookDB' : bookOSDB,
             'name' :name
         }
         res.render("book/bookOSList.ejs",renderData)
